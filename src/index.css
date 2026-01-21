@@ -27,17 +27,21 @@ html, body, #root {
   overflow-x: hidden;
 }
 
-@keyframes heart-float {
+@keyframes heart-spread {
   0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.3);
+  }
+  20% {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translate(calc(var(--spread-x) * 0.3), calc(var(--spread-y) * 0.3)) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translateY(-80px) scale(1.5);
+    transform: translate(var(--spread-x), var(--spread-y)) scale(0.5);
   }
 }
 
-.animate-heart-float {
-  animation: heart-float 1.5s ease-out forwards;
+.animate-heart-spread {
+  animation: heart-spread ease-out forwards;
 }
