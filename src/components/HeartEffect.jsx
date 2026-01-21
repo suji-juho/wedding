@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 function HeartEffect() {
   const [hearts, setHearts] = useState([]);
@@ -12,6 +12,16 @@ function HeartEffect() {
   ];
 
   const createHeart = useCallback((e) => {
+    // 버튼, 링크, 인풋 등 인터랙티브 요소는 제외
+    const tag = e.target.tagName.toLowerCase();
+    const isInteractive = ['button', 'a', 'input', 'textarea', 'select'].includes(tag) ||
+      e.target.closest('button') ||
+      e.target.closest('a') ||
+      e.target.closest('input') ||
+      e.target.closest('[role="button"]');
+
+    if (isInteractive) return;
+
     const x = e.clientX || (e.touches && e.touches[0]?.clientX);
     const y = e.clientY || (e.touches && e.touches[0]?.clientY);
 
@@ -44,13 +54,18 @@ function HeartEffect() {
     }, 2000);
   }, []);
 
+  useEffect(() => {
+    document.addEventListener('click', createHeart);
+    document.addEventListener('touchstart', createHeart);
+
+    return () => {
+      document.removeEventListener('click', createHeart);
+      document.removeEventListener('touchstart', createHeart);
+    };
+  }, [createHeart]);
+
   return (
-    <div
-      className="fixed inset-0 z-40 pointer-events-auto"
-      onClick={createHeart}
-      onTouchStart={createHeart}
-      style={{ touchAction: 'manipulation' }}
-    >
+    <div className="fixed inset-0 z-40 pointer-events-none">
       {hearts.map((heart) => (
         <svg
           key={heart.id}
