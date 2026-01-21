@@ -6,10 +6,12 @@ import Gallery from './components/Gallery';
 import Account from './components/Account';
 import Guestbook from './components/Guestbook';
 import Footer from './components/Footer';
+import HeartEffect from './components/HeartEffect';
 
 function App() {
   return (
     <div className="min-h-screen">
+      <HeartEffect />
       <Hero />
       <Greeting />
       <Calendar />
