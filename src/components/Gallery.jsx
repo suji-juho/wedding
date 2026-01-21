@@ -3,7 +3,17 @@ import { weddingConfig } from '../config/wedding';
 
 function Gallery() {
   const { gallery } = weddingConfig;
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null);
+
+  const handlePrev = (e) => {
+    e.stopPropagation();
+    setSelectedIndex((prev) => (prev === 0 ? gallery.length - 1 : prev - 1));
+  };
+
+  const handleNext = (e) => {
+    e.stopPropagation();
+    setSelectedIndex((prev) => (prev === gallery.length - 1 ? 0 : prev + 1));
+  };
 
   return (
     <section className="py-20 px-4 bg-secondary/20">
@@ -16,7 +26,7 @@ function Gallery() {
             <div
               key={index}
               className="aspect-square bg-gray-200 rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition"
-              onClick={() => setSelectedImage(image)}
+              onClick={() => setSelectedIndex(index)}
             >
               <img
                 src={image}
@@ -32,24 +42,44 @@ function Gallery() {
         </div>
 
         {/* 이미지 모달 */}
-        {selectedImage && (
+        {selectedIndex !== null && (
           <div
             className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
-            onClick={() => setSelectedImage(null)}
+            onClick={() => setSelectedIndex(null)}
           >
-            <div className="relative max-w-lg w-full">
+            {/* 이전 버튼 */}
+            <button
+              onClick={handlePrev}
+              className="absolute left-4 text-white text-4xl p-2 hover:bg-white/10 rounded-full transition"
+            >
+              ‹
+            </button>
+
+            <div className="relative max-w-lg w-full" onClick={(e) => e.stopPropagation()}>
               <img
-                src={selectedImage}
+                src={gallery[selectedIndex]}
                 alt="갤러리 상세"
                 className="w-full rounded-lg"
               />
               <button
                 className="absolute top-4 right-4 text-white text-2xl"
-                onClick={() => setSelectedImage(null)}
+                onClick={() => setSelectedIndex(null)}
               >
                 ✕
               </button>
+              {/* 인디케이터 */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm bg-black/50 px-3 py-1 rounded-full">
+                {selectedIndex + 1} / {gallery.length}
+              </div>
             </div>
+
+            {/* 다음 버튼 */}
+            <button
+              onClick={handleNext}
+              className="absolute right-4 text-white text-4xl p-2 hover:bg-white/10 rounded-full transition"
+            >
+              ›
+            </button>
           </div>
         )}
       </div>
