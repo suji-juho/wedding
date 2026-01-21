@@ -50,7 +50,7 @@ function Gallery() {
             {/* 이전 버튼 */}
             <button
               onClick={handlePrev}
-              className="absolute left-4 text-white text-4xl p-2 hover:bg-white/10 rounded-full transition"
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center text-white text-4xl bg-black/20 hover:bg-black/40 rounded-full transition"
             >
               ‹
             </button>
@@ -76,7 +76,7 @@ function Gallery() {
             {/* 다음 버튼 */}
             <button
               onClick={handleNext}
-              className="absolute right-4 text-white text-4xl p-2 hover:bg-white/10 rounded-full transition"
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center text-white text-4xl bg-black/20 hover:bg-black/40 rounded-full transition"
             >
               ›
             </button>
