@@ -32,6 +32,7 @@ function Gallery() {
                 src={image}
                 alt={`갤러리 ${index + 1}`}
                 className="w-full h-full object-cover"
+                loading="lazy"
                 onError={(e) => {
                   e.target.style.display = 'none';
                   e.target.parentElement.innerHTML = `<div class="w-full h-full flex items-center justify-center text-gray-400 text-xs">사진 ${index + 1}</div>`;
