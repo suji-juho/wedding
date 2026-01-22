@@ -25,7 +25,7 @@ function Gallery() {
           {gallery.map((image, index) => (
             <div
               key={index}
-              className="aspect-square bg-gray-200 rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition"
+              className="aspect-[2/3] bg-gray-200 rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition"
               onClick={() => setSelectedIndex(index)}
             >
               <img
