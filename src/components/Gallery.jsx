@@ -1,18 +1,39 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { weddingConfig } from '../config/wedding';
 
 function Gallery() {
   const { gallery } = weddingConfig;
   const [selectedIndex, setSelectedIndex] = useState(null);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
   const handlePrev = (e) => {
-    e.stopPropagation();
+    if (e) e.stopPropagation();
     setSelectedIndex((prev) => (prev === 0 ? gallery.length - 1 : prev - 1));
   };
 
   const handleNext = (e) => {
-    e.stopPropagation();
+    if (e) e.stopPropagation();
     setSelectedIndex((prev) => (prev === gallery.length - 1 ? 0 : prev + 1));
+  };
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const diff = touchStartX.current - touchEndX.current;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
   };
 
   return (
@@ -51,12 +72,20 @@ function Gallery() {
             {/* 이전 버튼 */}
             <button
               onClick={handlePrev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center text-white text-4xl bg-black/20 hover:bg-black/40 rounded-full transition"
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-black/30 hover:bg-black/50 rounded-full transition"
             >
-              ‹
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
             </button>
 
-            <div className="relative max-w-lg w-full" onClick={(e) => e.stopPropagation()}>
+            <div
+              className="relative max-w-lg w-full"
+              onClick={(e) => e.stopPropagation()}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
               <img
                 src={gallery[selectedIndex]}
                 alt="갤러리 상세"
@@ -77,9 +106,11 @@ function Gallery() {
             {/* 다음 버튼 */}
             <button
               onClick={handleNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center text-white text-4xl bg-black/20 hover:bg-black/40 rounded-full transition"
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-black/30 hover:bg-black/50 rounded-full transition"
             >
-              ›
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
             </button>
           </div>
         )}
