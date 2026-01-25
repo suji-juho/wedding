@@ -1,20 +1,32 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { weddingConfig } from '../config/wedding';
 
 function Gallery() {
   const { gallery } = weddingConfig;
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
 
   // 팝업 열릴 때 배경 스크롤 방지
   useEffect(() => {
     if (selectedIndex !== null) {
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
       document.body.style.overflow = 'hidden';
     } else {
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
       document.body.style.overflow = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
     }
     return () => {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
       document.body.style.overflow = '';
     };
   }, [selectedIndex]);
@@ -27,25 +39,6 @@ function Gallery() {
   const handleNext = (e) => {
     if (e) e.stopPropagation();
     setSelectedIndex((prev) => (prev === gallery.length - 1 ? 0 : prev + 1));
-  };
-
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchMove = (e) => {
-    touchEndX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = () => {
-    const diff = touchStartX.current - touchEndX.current;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) {
-        handleNext();
-      } else {
-        handlePrev();
-      }
-    }
   };
 
   return (
@@ -94,9 +87,6 @@ function Gallery() {
             <div
               className="relative max-w-lg w-full"
               onClick={(e) => e.stopPropagation()}
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
             >
               <img
                 src={gallery[selectedIndex]}
