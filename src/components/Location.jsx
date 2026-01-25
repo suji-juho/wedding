@@ -6,6 +6,21 @@ function Location() {
   const mapRef = useRef(null);
   const [showShuttleImage, setShowShuttleImage] = useState(false);
 
+  // 셔틀 팝업 열릴 때 배경 스크롤 방지
+  useEffect(() => {
+    if (showShuttleImage) {
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    };
+  }, [showShuttleImage]);
+
   useEffect(() => {
     if (window.kakao && window.kakao.maps) {
       const container = mapRef.current;
@@ -136,22 +151,25 @@ function Location() {
 
         {/* 셔틀버스 이미지 모달 */}
         {showShuttleImage && (
-          <div
-            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 overflow-y-auto"
-            onClick={() => setShowShuttleImage(false)}
-          >
-            <div className="relative max-w-lg w-full my-8" onClick={(e) => e.stopPropagation()}>
+          <div className="fixed inset-0 bg-black/80 z-50 flex flex-col">
+            {/* 고정 닫기 버튼 */}
+            <div className="flex justify-end p-4">
               <button
-                className="absolute -top-2 right-0 w-8 h-8 flex items-center justify-center bg-black/50 text-white text-lg rounded-full z-10"
+                className="w-10 h-10 flex items-center justify-center bg-black/50 text-white text-xl rounded-full"
                 onClick={() => setShowShuttleImage(false)}
               >
                 ✕
               </button>
-              <img
-                src={location.transportation.shuttleImage}
-                alt="셔틀버스 타는법"
-                className="w-full rounded-lg"
-              />
+            </div>
+            {/* 스크롤 가능한 이미지 영역 */}
+            <div className="flex-1 overflow-y-auto px-4 pb-4">
+              <div className="max-w-lg mx-auto">
+                <img
+                  src={location.transportation.shuttleImage}
+                  alt="셔틀버스 타는법"
+                  className="w-full rounded-lg"
+                />
+              </div>
             </div>
           </div>
         )}
