@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { weddingConfig } from '../config/wedding';
 
 function Gallery() {
@@ -6,6 +6,18 @@ function Gallery() {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
+
+  // 팝업 열릴 때 배경 스크롤 방지
+  useEffect(() => {
+    if (selectedIndex !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedIndex]);
 
   const handlePrev = (e) => {
     if (e) e.stopPropagation();
