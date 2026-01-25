@@ -47,10 +47,7 @@ export const weddingConfig = {
     },
     transportation: {
       shuttle: '서울역 하차 후 서부방면 롯데마트 앞에서 탑승 가능합니다.',
-      shuttleImages: [
-        '/wedding/shuttle/서울역 1,4호선 이용시.jpg',
-        '/wedding/shuttle/서울역 ktx 이용시.jpg',
-      ],
+      shuttleImage: '/wedding/shuttle/shuttle.jpg',
       subway: '2·5호선 충정로역 4번출구 도보 3분, 한국경제신문사 18F',
       car: '"한국경제신문사" 또는 주소 입력, 본 건물 지하 주차장 이용',
       bus: {
