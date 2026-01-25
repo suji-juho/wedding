@@ -137,21 +137,24 @@ function Location() {
         {/* 셔틀버스 이미지 모달 */}
         {showShuttleImage && (
           <div
-            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 overflow-y-auto"
             onClick={() => setShowShuttleImage(false)}
           >
-            <div className="relative max-w-lg w-full">
-              <img
-                src={location.transportation.shuttleImage}
-                alt="셔틀버스 타는법"
-                className="w-full rounded-lg"
-              />
+            <div className="relative max-w-lg w-full space-y-4 my-8" onClick={(e) => e.stopPropagation()}>
               <button
-                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-black/50 text-white text-lg rounded-full"
+                className="absolute -top-2 right-0 w-8 h-8 flex items-center justify-center bg-black/50 text-white text-lg rounded-full z-10"
                 onClick={() => setShowShuttleImage(false)}
               >
                 ✕
               </button>
+              {location.transportation.shuttleImages.map((img, index) => (
+                <img
+                  key={index}
+                  src={img}
+                  alt={`셔틀버스 타는법 ${index + 1}`}
+                  className="w-full rounded-lg"
+                />
+              ))}
             </div>
           </div>
         )}
