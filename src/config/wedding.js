@@ -77,6 +77,12 @@ export const weddingConfig = {
     '/wedding/images/photo7.jpg',
     '/wedding/images/photo8.jpg',
     '/wedding/images/photo9.jpg',
+    '/wedding/images/photo10.jpg',
+    '/wedding/images/photo11.jpg',
+    '/wedding/images/photo12.jpg',
+    '/wedding/images/photo13.jpg',
+    '/wedding/images/photo14.jpg',
+    '/wedding/images/photo15.jpg',
   ],
 
   // 메인 이미지
