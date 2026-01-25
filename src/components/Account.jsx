@@ -5,12 +5,13 @@ function Account() {
   const { groom, bride } = weddingConfig;
   const [openSection, setOpenSection] = useState(null);
 
-  const copyAccount = (account) => {
-    navigator.clipboard.writeText(account.number);
+  const copyAccount = (number) => {
+    const cleanNumber = number.replace(/-/g, '');
+    navigator.clipboard.writeText(cleanNumber);
     alert('계좌번호가 복사되었습니다.');
   };
 
-  const AccountCard = ({ person, label, bgColor }) => (
+  const AccountCard = ({ accounts, label, bgColor }) => (
     <div className="mb-4">
       <button
         className={`w-full py-4 px-6 ${bgColor} rounded-lg text-left flex justify-between items-center`}
@@ -31,32 +32,26 @@ function Account() {
 
       {openSection === label && (
         <div className="mt-2 bg-white rounded-lg p-4 space-y-4">
-          {/* 본인 계좌 */}
-          <div className="flex justify-between items-center py-2 border-b">
-            <div>
-              <p className="text-sm text-gray-500">{person.account.bank}</p>
-              <p className="font-medium">{person.account.number}</p>
-              <p className="text-sm text-gray-600">{person.account.holder}</p>
-            </div>
-            <button
-              onClick={() => copyAccount(person.account)}
-              className="px-4 py-2 bg-primary text-white text-sm rounded-lg hover:bg-primary/90 transition"
+          {accounts.map((account, index) => (
+            <div
+              key={index}
+              className={`flex justify-between items-center py-2 ${
+                index < accounts.length - 1 ? 'border-b' : ''
+              }`}
             >
-              복사
-            </button>
-          </div>
-
-          {/* 부모님 계좌 (필요시 추가) */}
-          {/*
-          <div className="flex justify-between items-center py-2">
-            <div>
-              <p className="text-sm text-gray-500">아버지 계좌</p>
-              <p className="font-medium">신한은행 123-456-789</p>
-              <p className="text-sm text-gray-600">홍길동</p>
+              <div>
+                <p className="text-sm text-gray-500">{account.relation} · {account.bank}</p>
+                <p className="font-medium">{account.number}</p>
+                <p className="text-sm text-gray-600">{account.holder}</p>
+              </div>
+              <button
+                onClick={() => copyAccount(account.number)}
+                className="px-4 py-2 bg-primary text-white text-sm rounded-lg hover:bg-primary/90 transition"
+              >
+                복사
+              </button>
             </div>
-            <button className="px-4 py-2 bg-primary text-white text-sm rounded-lg">복사</button>
-          </div>
-          */}
+          ))}
         </div>
       )}
     </div>
@@ -75,8 +70,8 @@ function Account() {
 진심으로 감사드립니다.`}
         </p>
 
-        <AccountCard person={groom} label="신랑" bgColor="bg-blue-50" />
-        <AccountCard person={bride} label="신부" bgColor="bg-pink-50" />
+        <AccountCard accounts={groom.accounts} label="신랑" bgColor="bg-blue-50" />
+        <AccountCard accounts={bride.accounts} label="신부" bgColor="bg-pink-50" />
       </div>
     </section>
   );

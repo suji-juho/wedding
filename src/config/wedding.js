@@ -8,11 +8,11 @@ export const weddingConfig = {
     phone: '', // 추후 입력
     father: { name: '이복수', alive: true },
     mother: { name: '최영순', alive: true },
-    account: {
-      bank: '',
-      number: '',
-      holder: '',
-    },
+    accounts: [
+      { relation: '신랑', holder: '이주호', bank: '국민은행', number: '408801-01-303299' },
+      { relation: '아버지', holder: '이복수', bank: '국민은행', number: '355-05-0002-446' },
+      { relation: '어머니', holder: '최영순', bank: '국민은행', number: '038-21-1075-452' },
+    ],
   },
 
   // 신부 정보
@@ -21,11 +21,10 @@ export const weddingConfig = {
     phone: '', // 추후 입력
     father: null, // 표기 안 함
     mother: { name: '설보경', alive: true },
-    account: {
-      bank: '',
-      number: '',
-      holder: '',
-    },
+    accounts: [
+      { relation: '신부', holder: '김수지', bank: '토스뱅크', number: '1000-0372-4840' },
+      { relation: '어머니', holder: '설보경', bank: '우체국', number: '014100-02-199182' },
+    ],
   },
 
   // 결혼식 정보
