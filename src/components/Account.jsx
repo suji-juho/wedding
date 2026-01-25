@@ -40,9 +40,8 @@ function Account() {
               }`}
             >
               <div>
-                <p className="text-sm text-gray-500">{account.relation} · {account.bank}</p>
-                <p className="font-medium">{account.number}</p>
-                <p className="text-sm text-gray-600">{account.holder}</p>
+                <p className="font-medium">{account.holder}</p>
+                <p className="text-sm text-gray-500">{account.bank} {account.number}</p>
               </div>
               <button
                 onClick={() => copyAccount(account.number)}
