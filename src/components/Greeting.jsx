@@ -20,7 +20,7 @@ function Greeting() {
                 {groom.father.alive ? '' : '故 '}
                 {groom.father.name} · {groom.mother.alive ? '' : '故 '}
                 {groom.mother.name}
-                <span className="text-primary ml-2">의 아들</span> {groom.name}
+                <span className="text-primary ml-2">의 장남</span> {groom.name}
               </p>
             </div>
           </div>
@@ -29,7 +29,7 @@ function Greeting() {
               <p>
                 {bride.mother.alive ? '' : '故 '}
                 {bride.mother.name}
-                <span className="text-primary ml-2">의 딸</span> {bride.name}
+                <span className="text-primary ml-2">의 차녀</span> {bride.name}
               </p>
             </div>
           </div>
