@@ -1,9 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { weddingConfig } from '../config/wedding';
 
 function Location() {
   const { location } = weddingConfig;
   const mapRef = useRef(null);
+  const [showShuttleImage, setShowShuttleImage] = useState(false);
 
   useEffect(() => {
     if (window.kakao && window.kakao.maps) {
@@ -97,7 +98,13 @@ function Location() {
             <h4 className="font-medium text-primary mb-2 flex items-center gap-2">
               <span>🚐</span> 셔틀버스
             </h4>
-            <p className="text-gray-600">{location.transportation.shuttle}</p>
+            <p className="text-gray-600 mb-3">{location.transportation.shuttle}</p>
+            <button
+              onClick={() => setShowShuttleImage(true)}
+              className="w-full py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary/90 transition"
+            >
+              셔틀버스 타는법
+            </button>
           </div>
 
           <div className="bg-secondary/30 rounded-lg p-4">
@@ -126,6 +133,28 @@ function Location() {
             </div>
           </div>
         </div>
+
+        {/* 셔틀버스 이미지 모달 */}
+        {showShuttleImage && (
+          <div
+            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+            onClick={() => setShowShuttleImage(false)}
+          >
+            <div className="relative max-w-lg w-full">
+              <img
+                src={location.transportation.shuttleImage}
+                alt="셔틀버스 타는법"
+                className="w-full rounded-lg"
+              />
+              <button
+                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-black/50 text-white text-lg rounded-full"
+                onClick={() => setShowShuttleImage(false)}
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
